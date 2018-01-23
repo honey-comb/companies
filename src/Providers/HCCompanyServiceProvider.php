@@ -25,17 +25,19 @@
  * http://www.interactivesolutions.lt
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HoneyComb\Companies\Providers;
 
+use HoneyComb\Companies\Repositories\HCCompanyRepository;
+use HoneyComb\Companies\Services\HCCompanyService;
 use HoneyComb\Core\Providers\HCBaseServiceProvider;
 
 /**
  * Class HCCompaniesServiceProvider
  * @package HoneyComb\Companies\Providers
  */
-class HCCompaniesServiceProvider extends HCBaseServiceProvider
+class HCCompanyServiceProvider extends HCBaseServiceProvider
 {
     /**
      * @var string
@@ -55,4 +57,28 @@ class HCCompaniesServiceProvider extends HCBaseServiceProvider
      * @var string
      */
     protected $namespace = 'HoneyComb\Companies\Http\Controllers';
+
+    /**
+     *
+     */
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            $this->packagePath('config/companies.php'), 'hc'
+        );
+        
+        $this->registerRepositories ();
+
+        $this->registerServices ();
+    }
+
+    private function registerServices(): void
+    {
+        $this->app->singleton(HCCompanyService::class);
+    }
+
+    private function registerRepositories(): void
+    {
+        $this->app->singleton(HCCompanyRepository::class);
+    }
 }
