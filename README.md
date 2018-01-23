@@ -1,0 +1,42 @@
+# HoneyComb companies package
+
+## Description
+
+HoneyComb CMS Companies package, stores simple information about company.
+Currently contains integration with (rekvizitai.vz.lt) for automated company data retrieval for Lithuanian companies.
+
+## Requirement
+
+ - php: `^7.1`
+ - laravel: `^5.5`
+ 
+ ## Installation
+
+Begin by installing this package through Composer.
+
+```js
+	{
+	    "require": {
+	        "honey-comb/companies": "*"
+	    }
+	}
+```
+or
+```js
+    composer require honey-comb/companies
+```
+
+## Laravel integration
+
+Firstly register the service provider and Facade by opening `config/app.php`
+
+    HoneyComb\Core\Providers\HCCompanyServiceProvider::class,
+    
+## Usage
+
+In the `.env` file please add these parameters:
+
+    HC_COMPANIES_LT_API_KEY=KEY
+    HC_COMPANIES_LT_CLIENT_ID=ID
+    
+Through the help of `HoneyComb\Companies\Services\HCCompanyService` call `findByCode('CODE')` function
