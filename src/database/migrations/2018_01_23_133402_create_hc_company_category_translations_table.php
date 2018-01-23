@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateHcCompaniesCategoriesTable extends Migration {
+class CreateHcComapnyCategoryTranslationsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,22 @@ class CreateHcCompaniesCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('hc_companies_categories', function(Blueprint $table)
+		Schema::create('hc_company_category_translations', function(Blueprint $table)
 		{
             $table->increments('count');
             $table->uuid('id')->unique();
             $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->datetime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->datetime('deleted_at')->nullable();
+
+			$table->char('record_id', 36)->index();
+			$table->char('language_code', 36)->index();
+
+            $table->foreign('record_id')->references('id')->on('hc_company_category')
+                ->onUpdate('NO ACTION')->onDelete('NO ACTION');
+
+            $table->foreign('language_code')->references('id')->on('hc_languages')
+                ->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -30,7 +39,7 @@ class CreateHcCompaniesCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('hc_companies_categories');
+		Schema::drop('hc_company_category_translations');
 	}
 
 }

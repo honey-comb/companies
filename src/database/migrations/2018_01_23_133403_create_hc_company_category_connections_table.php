@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateHcCompaniesCategoriesConnectionsTable extends Migration {
+class CreateHcCompanyCategoryConnectionsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateHcCompaniesCategoriesConnectionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('hc_companies_categories_connections', function(Blueprint $table)
+		Schema::create('hc_company_category_connections', function(Blueprint $table)
 		{
             $table->increments('count');
             $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -20,10 +20,10 @@ class CreateHcCompaniesCategoriesConnectionsTable extends Migration {
 			$table->char('company_id', 36)->index();
 			$table->char('category_id', 36)->index();
 
-            $table->foreign('company_id')->references('id')->on('hc_companies')
+            $table->foreign('company_id')->references('id')->on('hc_company')
                 ->onUpdate('NO ACTION')->onDelete('NO ACTION');
 
-            $table->foreign('category_id')->references('id')->on('hc_companies_categories')
+            $table->foreign('category_id')->references('id')->on('hc_company_category')
                 ->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
@@ -36,7 +36,7 @@ class CreateHcCompaniesCategoriesConnectionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('hc_companies_categories_connections');
+		Schema::drop('hc_company_category_connections');
 	}
 
 }

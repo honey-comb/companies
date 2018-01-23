@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateHcCompaniesTable extends Migration {
+class CreateHcCompanyCategoryTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,13 @@ class CreateHcCompaniesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('hc_companies', function(Blueprint $table)
+		Schema::create('hc_company_category', function(Blueprint $table)
 		{
             $table->increments('count');
             $table->uuid('id')->unique();
             $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->datetime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->datetime('deleted_at')->nullable();
-
-			$table->string('title');
-			$table->string('code');
-			$table->string('vat')->nullable();
 		});
 	}
 
@@ -34,7 +30,7 @@ class CreateHcCompaniesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('hc_companies');
+		Schema::drop('hc_company_category');
 	}
 
 }
