@@ -40,3 +40,30 @@ In the `.env` file please add these parameters:
     HC_COMPANIES_LT_CLIENT_ID=ID
     
 Through the help of `HoneyComb\Companies\Services\HCCompanyService` call `findByCode('CODE')` function
+
+# EXAMPLE
+
+    <?php
+    
+    namespace HoneyComb\Companies\Http\Controllers\Admin;
+    
+    use HoneyComb\Companies\Services\HCCompanyService;
+    use HoneyComb\Core\Http\Controllers\HCBaseController;
+    
+    class HCCompanyController extends HCBaseController
+    {
+        /**
+         * @var HCCompanyService
+         */
+        private $service;
+    
+        public function __construct(HCCompanyService $service)
+        {
+            $this->service = $service;
+        }
+    
+        public function findByCode (string $code)
+        {
+            return $this->service->findByCode($code, "lt");
+        }
+    }
