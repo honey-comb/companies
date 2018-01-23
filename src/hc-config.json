@@ -1,0 +1,14 @@
+{
+    "general": {
+        "packageName": "HCCompanies",
+        "sequence": 0,
+        "namespace": "HoneyComb\\Companies\\"
+    },
+    "formData": {},
+    "adminMenu": [],
+    "seeder": "",
+    "routes": [],
+    "acl": {
+        "permissions": []
+    }
+}
