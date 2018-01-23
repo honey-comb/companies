@@ -31,4 +31,23 @@ class HCCompanyService
     {
         return $this->repository;
     }
+
+    /**
+     * @param string $code
+     * @param string $country
+     * @return Model|null
+     */
+    public function findByCode(string $code, string $country): ? Model
+    {
+        $company = $this->getRepository()->findOneBy(['code' => $code]);
+
+        if ($company == null) {
+            $config = config('hc.companies.' . $country);
+
+
+        }
+
+        return $company;
+    }
+
 }
