@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace HoneyComb\Companies\Services;
 
@@ -43,8 +43,7 @@ class HCCompanyService
         if ($company == null) {
             $config = config('hc.companies.' . $country);
 
-            switch ($country)
-            {
+            switch ($country) {
                 case 'lt':
 
                     $company = $this->getFromRekvizitaiVz($code, $config);
@@ -68,21 +67,22 @@ class HCCompanyService
         //TODO make some gulp call
 
         $url = $config['url'] .
-                '?apiKey=' . $config['apiKey'] .
-                '&clientId=' . $config['clientId'] .
-                '&method=companyDetails' .
-                '&code=' . $code;
+            '?apiKey=' . $config['apiKey'] .
+            '&clientId=' . $config['clientId'] .
+            '&method=companyDetails' .
+            '&code=' . $code;
 
         $response = namespacedXMLToArray(file_get_contents($url));
 
-        if ($response['status'] === 'success')
-        {
+        if ($response['status'] === 'success') {
             $companyData = $response['companies']['company'];
             $companyData['vat'] = $companyData['pvmCode'];
 
             $companyData = array_only($companyData, $this->repository->getFillable());
 
-            $companyData = array_filter($companyData, function ($item) { return !is_array($item); });
+            $companyData = array_filter($companyData, function($item) {
+                return !is_array($item);
+            });
 
             $this->repository->makeQuery()->create($companyData);
 
