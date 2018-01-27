@@ -50,6 +50,6 @@ class HCCompany extends HCUuidModel
      * @var array
      */
     protected $fillable = [
-        "id", "title", "code", "vat"
+        "id", "title", "code", "vat", "address", "original_data"
     ];
 }

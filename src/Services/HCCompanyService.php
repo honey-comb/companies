@@ -76,6 +76,7 @@ class HCCompanyService
 
         if ($response['status'] === 'success') {
             $companyData = $response['companies']['company'];
+            $companyData['original_data'] = json_encode($companyData);
             $companyData['vat'] = $companyData['pvmCode'];
 
             $companyData = array_only($companyData, $this->repository->getFillable());
@@ -83,6 +84,7 @@ class HCCompanyService
             $companyData = array_filter($companyData, function($item) {
                 return !is_array($item);
             });
+
 
             $this->repository->makeQuery()->create($companyData);
 
