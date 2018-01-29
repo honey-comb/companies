@@ -43,7 +43,7 @@ class HCCompanyController extends HCBaseController
     /**
      * @var HCCompanyService
      */
-    private $service;
+    protected $service;
 
     /**
      * @var Connection
