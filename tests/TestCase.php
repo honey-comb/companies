@@ -21,40 +21,45 @@
  * SOFTWARE.
  *
  * Contact InteractiveSolutions:
- * E-mail: hello@interactivesolutions.lt
+ * E-mail: info@interactivesolutions.lt
  * http://www.interactivesolutions.lt
  */
 
 declare(strict_types = 1);
 
-namespace HoneyComb\Companies\Models;
+namespace Tests;
 
-use HoneyComb\Starter\Models\HCUuidModel;
+
+use HoneyComb\Companies\Providers\HCCompanyServiceProvider;
+use Illuminate\Foundation\Application;
 
 /**
- * Class HCCompany
- * @package HoneyComb\Companies\Models
+ * Class TestCase
+ * @package Tests
  */
-class HCCompany extends HCUuidModel
+abstract class TestCase extends \Orchestra\Testbench\BrowserKit\TestCase
 {
     /**
-     * The database table used by the model.
      *
-     * @var string
      */
-    protected $table = 'hc_company';
+    protected function setUp()
+    {
+        parent::setUp();
+    }
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @param Application $app
+     * @return array
      */
-    protected $fillable = [
-        'id',
-        'title',
-        'code',
-        'vat',
-        'address',
-        'original_data',
-    ];
+    protected function getPackageProviders($app): array
+    {
+        return [
+            HCCompanyServiceProvider::class,
+        ];
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+    }
 }

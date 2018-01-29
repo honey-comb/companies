@@ -30,6 +30,13 @@
             "Tests\\": "tests/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HoneyComb\\Companies\\Providers\\HCCompanyServiceProvider"
+            ]
+        }
+    },
     "scripts": {
         "test": [
             "paratest -p4 --colors"

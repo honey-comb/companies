@@ -29,8 +29,8 @@ declare(strict_types = 1);
 
 namespace HoneyComb\Companies\Models;
 
-use HoneyComb\Core\Models\HCUuidModel;
 use HoneyComb\Core\Models\Traits\HCTranslation;
+use HoneyComb\Starter\Models\HCUuidModel;
 
 /**
  * Class HCCompanyCategory
@@ -53,6 +53,6 @@ class HCCompanyCategory extends HCUuidModel
      * @var array
      */
     protected $fillable = [
-        "id"
+        'id',
     ];
 }

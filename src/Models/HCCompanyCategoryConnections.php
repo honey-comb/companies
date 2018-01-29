@@ -29,7 +29,7 @@ declare(strict_types = 1);
 
 namespace HoneyComb\Companies\Models;
 
-use HoneyComb\Core\Models\HCUuidModel;
+use HoneyComb\Starter\Models\HCUuidModel;
 
 /**
  * Class HCCompanyCategoryConnections
@@ -50,6 +50,7 @@ class HCCompanyCategoryConnections extends HCUuidModel
      * @var array
      */
     protected $fillable = [
-        "company_id", "category_id"
+        'company_id',
+        'category_id',
     ];
 }

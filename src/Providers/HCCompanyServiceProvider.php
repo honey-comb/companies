@@ -31,7 +31,7 @@ namespace HoneyComb\Companies\Providers;
 
 use HoneyComb\Companies\Repositories\HCCompanyRepository;
 use HoneyComb\Companies\Services\HCCompanyService;
-use HoneyComb\Core\Providers\HCBaseServiceProvider;
+use HoneyComb\Starter\Providers\HCBaseServiceProvider;
 
 /**
  * Class HCCompaniesServiceProvider
@@ -66,17 +66,23 @@ class HCCompanyServiceProvider extends HCBaseServiceProvider
         $this->mergeConfigFrom(
             $this->packagePath('config/companies.php'), 'hc'
         );
-        
-        $this->registerRepositories ();
 
-        $this->registerServices ();
+        $this->registerRepositories();
+
+        $this->registerServices();
     }
 
+    /**
+     *
+     */
     private function registerServices(): void
     {
         $this->app->singleton(HCCompanyService::class);
     }
 
+    /**
+     *
+     */
     private function registerRepositories(): void
     {
         $this->app->singleton(HCCompanyRepository::class);
