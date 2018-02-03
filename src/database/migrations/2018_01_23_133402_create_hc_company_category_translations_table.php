@@ -26,7 +26,7 @@ class CreateHcCompanyCategoryTranslationsTable extends Migration {
             $table->foreign('record_id')->references('id')->on('hc_company_category')
                 ->onUpdate('NO ACTION')->onDelete('NO ACTION');
 
-            $table->foreign('language_code')->references('id')->on('hc_languages')
+            $table->foreign('language_code')->references('iso_639_1')->on('hc_languages')
                 ->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
