@@ -56,5 +56,6 @@ class HCCompany extends HCUuidModel
         'vat',
         'address',
         'original_data',
+        'country_id',
     ];
 }
