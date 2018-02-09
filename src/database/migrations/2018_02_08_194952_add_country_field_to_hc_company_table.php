@@ -15,7 +15,7 @@ class AddCountryFieldToHcCompanyTable extends Migration
     {
         Schema::table('hc_company', function(Blueprint $table)
         {
-            $table->uuid('country_id')->nullable();
+            $table->string('country_id', 2)->nullable();
 
             $table->unique(['code', 'country_id']);
         });
