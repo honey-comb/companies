@@ -9,7 +9,7 @@
     "require": {
         "php": ">=7.1.0",
         "laravel/framework": "5.5.*",
-        "honey-comb/core": "0.1.*"
+        "honey-comb/core": "0.2.*"
     },
     "require-dev": {
         "brianium/paratest": "^1.0",
