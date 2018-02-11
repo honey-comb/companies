@@ -20,9 +20,15 @@ class CreateHcCompanyTable extends Migration {
             $table->datetime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->datetime('deleted_at')->nullable();
 
-			$table->string('title');
+            $table->string('country_id', 2)->nullable();
+
+            $table->string('title');
 			$table->string('code');
 			$table->string('vat')->nullable();
+            $table->string('address')->nullable();
+            $table->json('original_data')->nullable();
+
+            $table->unique(['code', 'country_id']);
 		});
 	}
 

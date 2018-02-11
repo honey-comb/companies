@@ -29,20 +29,20 @@ declare(strict_types = 1);
 
 namespace HoneyComb\Companies\Models;
 
-use HoneyComb\Starter\Models\HCUuidModel;
+use HoneyComb\Starter\Models\HCModel;
 
 /**
- * Class HCCompanyCategoryTranslations
+ * Class HCCompanyCategoryTranslation
  * @package HoneyComb\Companies\Models
  */
-class HCCompanyCategoryTranslations extends HCUuidModel
+class HCCompanyCategoryTranslation extends HCModel
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'hc_company_category_translations';
+    protected $table = 'hc_company_category_translation';
 
     /**
      * The attributes that are mass assignable.
@@ -50,7 +50,6 @@ class HCCompanyCategoryTranslations extends HCUuidModel
      * @var array
      */
     protected $fillable = [
-        'id',
         'record_id',
         'language_code',
     ];

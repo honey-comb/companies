@@ -35,14 +35,14 @@ use HoneyComb\Starter\Models\HCUuidModel;
  * Class HCCompanyCategoryConnections
  * @package HoneyComb\Companies\Models
  */
-class HCCompanyCategoryConnections extends HCUuidModel
+class HCCompanyCategoryConnection extends HCUuidModel
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'hc_company_category_connections';
+    protected $table = 'hc_company_category_connection';
 
     /**
      * The attributes that are mass assignable.
