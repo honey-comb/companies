@@ -33,6 +33,7 @@ use HoneyComb\Companies\Services\HCCompanyService;
 use HoneyComb\Core\Http\Controllers\HCBaseController;
 use HoneyComb\Starter\Helpers\HCFrontendResponse;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class HCCompanyController
