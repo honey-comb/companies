@@ -30,7 +30,7 @@ declare(strict_types = 1);
 namespace HoneyComb\Companies\Repositories;
 
 use HoneyComb\Companies\Models\HCCompany;
-use HoneyComb\Core\Repositories\Traits\HCQueryBuilderTrait;
+use HoneyComb\Starter\Repositories\Traits\HCQueryBuilderTrait;
 use HoneyComb\Starter\Repositories\HCBaseRepository;
 
 /**
