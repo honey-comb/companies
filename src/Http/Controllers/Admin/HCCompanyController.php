@@ -227,7 +227,31 @@ class HCCompanyController extends HCBaseController
     }
 
     /**
-     * @param HCUserRequest $request
+     * Force delete record
+     *
+     * @param HCCompanyRequest $request
+     * @return JsonResponse
+     * @throws \Throwable
+     */
+    public function deleteForce(HCCompanyRequest $request): JsonResponse
+    {
+        $this->connection->beginTransaction();
+
+        try {
+            $this->service->getRepository()->deleteForce($request->getListIds());
+
+            $this->connection->commit();
+        } catch (\Throwable $exception) {
+            $this->connection->rollBack();
+
+            return $this->response->error($exception->getMessage());
+        }
+
+        return $this->response->success('Successfully deleted');
+    }
+
+    /**
+     * @param HCCompanyRequest $request
      * @return JsonResponse
      * @throws \Exception
      */

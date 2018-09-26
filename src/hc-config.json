@@ -29,6 +29,7 @@
                     "honey_comb_companies_companies_update",
                     "honey_comb_companies_companies_create",
                     "honey_comb_companies_companies_delete",
+                    "honey_comb_companies_companies_force_delete",
                     "honey_comb_companies_companies_list"
                 ]
             }

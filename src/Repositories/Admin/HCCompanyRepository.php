@@ -80,6 +80,21 @@ class HCCompanyRepository extends HCBaseRepository
     }
 
     /**
+     * Soft deleting records
+     * @param array $ids
+     * @throws \Exception
+     */
+    public function deleteForce(array $ids): void
+    {
+        $records = $this->makeQuery()->withTrashed()->whereIn('id', $ids)->get();
+
+        foreach ($records as $record) {
+            /** @var HCCompany $record */
+            $record->forceDelete();
+        }
+    }
+
+    /**
      * @param array $companyIds
      * @return array
      */

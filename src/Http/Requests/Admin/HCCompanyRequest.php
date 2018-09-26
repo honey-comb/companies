@@ -59,16 +59,6 @@ class HCCompanyRequest extends FormRequest
     }
 
     /**
-     * Getting translations
-     *
-     * @return array
-     */
-    public function getTranslations(): array
-    {
-        return $this->input('translations', []);
-    }
-
-    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -93,13 +83,17 @@ class HCCompanyRequest extends FormRequest
                     ];
                 }
 
-                return [
-                    'company_code' => 'required_if:create_type,from_rekvizitai|integer',
+                if ($this->input('create_type') == 'rekvizitai') {
+                    return [
+                        'company_code' => 'integer',
+                    ];
+                }
 
-                    'country_id' => 'required_if:create_type,manually',
-                    'title' => 'required_if:create_type,manually',
+                return [
+                    'country_id' => 'required|min:2|max:2',
+                    'title' => 'required',
                     'code' => [
-                        'required_if:create_type,manually',
+                        'required',
                         Rule::unique('hc_company')->where(function ($query) {
                             return $query->where('code', $this->input('code'))
                                 ->where('country_id', $this->input('country_id'));
@@ -109,7 +103,7 @@ class HCCompanyRequest extends FormRequest
 
             case 'PUT':
                 return [
-                    'country_id' => 'required',
+                    'country_id' => 'required|min:2|max:2',
                     'title' => 'required',
                     'code' => [
                         'required',

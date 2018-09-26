@@ -111,7 +111,7 @@ class HCCompanyService
             'country_id' => 'lt',
             'code' => $companyCode,
         ])->exists()) {
-            throw new \Exception('Company already exists!');
+            throw new \Exception(trans('HCCompany::companies.company_exists'));
         }
 
         $data = $response['companies']['company'];
@@ -129,56 +129,23 @@ class HCCompanyService
     }
 
     /**
-     * Getting data from rekvizitai.vz.lt for LT countries
-     *
-     * @param string $code
-     * @param array $config
-     * @return HCCompany|null
-     */
-    private function getFromRekvizitaiVz(string $code, array $config): ?HCCompany
-    {
-        //TODO make some gulp call
-
-        $url = $config['url'] .
-            '?apiKey=' . $config['apiKey'] .
-            '&clientId=' . $config['clientId'] .
-            '&method=companyDetails' .
-            '&code=' . $code;
-
-        $response = namespacedXMLToArray(file_get_contents($url));
-
-        if ($response['status'] === 'success') {
-            $companyData = $response['companies']['company'];
-            $companyData['original_data'] = json_encode($companyData);
-            $companyData['vat'] = $companyData['pvmCode'];
-
-            $companyData = array_only($companyData, $this->getRepository()->getFillable());
-
-            $companyData = array_filter($companyData, function ($item) {
-                return !is_array($item);
-            });
-
-            $this->getRepository()->makeQuery()->create($companyData);
-
-            return $this->getRepository()->findOneBy(['code' => $code]);
-        };
-
-        return null;
-    }
-
-    /**
      * @param string $companyCode
      * @return string
+     * @throws \Exception
      */
     private function getContent(string $companyCode): string
     {
+        if (!config('companies.rekvizitai.apiKey') || !config('companies.rekvizitai.clientId')) {
+            throw new \Exception(trans('HCCompany::companies.credentials_required', ['name' => 'Rekvizitai']));
+        }
+
         $response = $this->client->get(config('companies.rekvizitai.url'), [
             'query' => [
                 'apiKey' => config('companies.rekvizitai.apiKey'),
                 'clientId' => config('companies.rekvizitai.clientId'),
                 'method' => 'companyDetails',
                 'code' => $companyCode,
-            ]
+            ],
         ]);
 
         return $response->getBody()->getContents();

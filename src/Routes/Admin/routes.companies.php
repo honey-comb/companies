@@ -57,6 +57,10 @@ Route::domain(config('hc.admin_domain'))
                 ->name('admin.api.companies.delete')
                 ->middleware('acl:honey_comb_companies_companies_delete');
 
+            Route::delete('force', 'HCCompanyController@deleteForce')
+                ->name('admin.api.companies.delete.force')
+                ->middleware('acl:honey_comb_companies_companies_force_delete');
+
             Route::post('restore', 'HCCompanyController@restore')
                 ->name('admin.api.companies.restore')
                 ->middleware('acl:honey_comb_companies_companies_delete');
