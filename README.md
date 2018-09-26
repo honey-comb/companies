@@ -62,8 +62,8 @@ Through the help of `HoneyComb\Companies\Services\HCCompanyService` call `findBy
             $this->service = $service;
         }
     
-        public function findByCode (string $code)
+        public function findByCode(string $code): ?HCCompany
         {
-            return $this->service->findByCode($code, "lt");
+            return $this->service->findByCode($code);
         }
     }

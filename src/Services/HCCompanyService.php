@@ -70,23 +70,15 @@ class HCCompanyService
 
     /**
      * @param string $code
-     * @param string $country
      * @return HCCompany|null
+     * @throws \Exception
      */
-    public function findByCode(string $code, string $country): ?HCCompany
+    public function findByCode(string $code): ?HCCompany
     {
         $company = $this->getRepository()->findOneBy(['code' => $code]);
 
         if (is_null($company)) {
-            $config = config('hc.companies.' . $country);
-
-            switch ($country) {
-                case 'lt':
-
-                    $company = $this->getFromRekvizitaiVz($code, $config);
-                    break;
-            }
-
+            $company = $this->createFromRekvizitai($code);
         }
 
         return $company;
