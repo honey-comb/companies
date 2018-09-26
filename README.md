@@ -1,4 +1,4 @@
-# HoneyComb companies package
+# HoneyComb companies package [![Build Status](https://travis-ci.com/honey-comb/companies.svg?branch=master)](https://travis-ci.com/honey-comb/companies)
 
 ## Description
 
