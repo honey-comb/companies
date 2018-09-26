@@ -8,7 +8,7 @@ Currently contains integration with (rekvizitai.vz.lt) for automated company dat
 ## Requirement
 
  - php: `^7.1`
- - laravel: `^5.5`
+ - laravel: `^5.6`
  
  ## Installation
 
@@ -17,7 +17,7 @@ Begin by installing this package through Composer.
 ```js
 	{
 	    "require": {
-	        "honey-comb/companies": "*"
+	        "honey-comb/companies": "0.3.*"
 	    }
 	}
 ```

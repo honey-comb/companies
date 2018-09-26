@@ -1,21 +1,30 @@
 {
     "name": "honey-comb/companies",
-    "description": "",
-    "keywords": [],
+    "description": "Honeycomb company package",
+    "keywords": ["honeycomb", "laravel", "companies"],
     "homepage": "https://github.com/honey-comb/companies",
     "license": "MIT",
-    "authors": [],
+    "authors": [
+        {
+            "name": "Mantas Paulauskas",
+            "email": "mp@interactivesolutions.lt"
+        },
+        {
+            "name": "Jevgenij Dmitrijev",
+            "email": "jd@interactivesolutions.lt"
+        }
+    ],
     "repositories": [],
     "require": {
-        "php": ">=7.1.0",
-        "laravel/framework": "5.5.*",
-        "honey-comb/core": "0.2.*"
+        "php": "^7.1",
+        "laravel/framework": "5.6.*",
+        "honey-comb/core": "0.3.*"
     },
     "require-dev": {
-        "brianium/paratest": "^1.0",
         "mockery/mockery": "^1.0",
-        "orchestra/testbench-browser-kit": "^3.5",
-        "phpunit/phpunit": "^6.4"
+        "orchestra/testbench-browser-kit": "^3.6",
+        "phpunit/phpunit": "~7.0",
+        "codedungeon/phpunit-result-printer": "^0.14"
     },
     "autoload": {
         "psr-4": {
@@ -43,9 +52,6 @@
         ]
     },
     "config": {
-        "secure-http": false,
-        "platform": {
-            "php": "7.1"
-        }
+        "secure-http": false
     }
 }

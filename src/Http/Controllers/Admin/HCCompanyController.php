@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2018 interactivesolutions
+ * @copyright 2018 innovationbase
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Contact InteractiveSolutions:
- * E-mail: info@interactivesolutions.lt
- * http://www.interactivesolutions.lt
+ * Contact InnovationBase:
+ * E-mail: hello@innovationbase.eu
+ * https://innovationbase.eu
  */
 
 declare(strict_types = 1);
 
 namespace HoneyComb\Companies\Http\Controllers\Admin;
 
+use HoneyComb\Companies\Models\HCCompany;
 use HoneyComb\Companies\Services\HCCompanyService;
 use HoneyComb\Core\Http\Controllers\HCBaseController;
 use HoneyComb\Starter\Helpers\HCFrontendResponse;
@@ -72,7 +73,7 @@ class HCCompanyController extends HCBaseController
      * @param string $code
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function findByCode(string $code)
+    public function findByCode(string $code): ? HCCompany
     {
         return $this->service->findByCode($code, "lt");
     }

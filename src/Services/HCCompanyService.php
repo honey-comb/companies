@@ -29,8 +29,8 @@ declare(strict_types = 1);
 
 namespace HoneyComb\Companies\Services;
 
+use HoneyComb\Companies\Models\HCCompany;
 use HoneyComb\Companies\Repositories\HCCompanyRepository;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class HCCompanyService
@@ -63,13 +63,13 @@ class HCCompanyService
     /**
      * @param string $code
      * @param string $country
-     * @return Model|null
+     * @return HCCompany|null
      */
-    public function findByCode(string $code, string $country): ? Model
+    public function findByCode(string $code, string $country): ?HCCompany
     {
         $company = $this->getRepository()->findOneBy(['code' => $code]);
 
-        if ($company == null) {
+        if (is_null($company)) {
             $config = config('hc.companies.' . $country);
 
             switch ($country) {
@@ -89,9 +89,9 @@ class HCCompanyService
      *
      * @param string $code
      * @param array $config
-     * @return Model|null
+     * @return HCCompany|null
      */
-    private function getFromRekvizitaiVz(string $code, array $config): ? Model
+    private function getFromRekvizitaiVz(string $code, array $config): ?HCCompany
     {
         //TODO make some gulp call
 
@@ -108,14 +108,13 @@ class HCCompanyService
             $companyData['original_data'] = json_encode($companyData);
             $companyData['vat'] = $companyData['pvmCode'];
 
-            $companyData = array_only($companyData, $this->repository->getFillable());
+            $companyData = array_only($companyData, $this->getRepository()->getFillable());
 
             $companyData = array_filter($companyData, function ($item) {
                 return !is_array($item);
             });
 
-
-            $this->repository->makeQuery()->create($companyData);
+            $this->getRepository()->makeQuery()->create($companyData);
 
             return $this->getRepository()->findOneBy(['code' => $code]);
         };

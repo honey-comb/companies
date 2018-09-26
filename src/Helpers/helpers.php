@@ -1,6 +1,6 @@
 <?php
 
-function removeNamespaceFromXML( $xml )
+function removeNamespaceFromXML($xml)
 {
     // Because I know all of the the namespaces that will possibly appear in
     // in the XML string I can just hard code them and check for
@@ -10,7 +10,7 @@ function removeNamespaceFromXML( $xml )
     $nameSpaceDefRegEx = '(\S+)=["\']?((?:.(?!["\']?\s+(?:\S+)=|[>"\']))+.)["\']?';
 
     // Cycle through each namespace and remove it from the XML string
-    foreach( $toRemove as $remove ) {
+    foreach ($toRemove as $remove) {
         // First remove the namespace from the opening of the tag
         $xml = str_replace('<' . $remove . ':', '<', $xml);
         // Now remove the namespace from the closing of the tag

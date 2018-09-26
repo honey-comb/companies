@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2018 interactivesolutions
+ * @copyright 2018 innovationbase
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Contact InteractiveSolutions:
- * E-mail: info@interactivesolutions.lt
- * http://www.interactivesolutions.lt
+ * Contact InnovationBase:
+ * E-mail: hello@innovationbase.eu
+ * https://innovationbase.eu
  */
 
 return [
-    "companies" => [
-        "lt" => [
-            "url" => "http://www.rekvizitai.lt/api-xml/",
-            "apiKey" => env('HC_COMPANIES_LT_API_KEY'),
-            "clientId" => env('HC_COMPANIES_LT_CLIENT_ID'),
+    'companies' => [
+        'lt' => [
+            'url' => 'http://www.rekvizitai.lt/api-xml/',
+            'apiKey' => env('HC_COMPANY_REKVIZITAI_API_KEY'),
+            'clientId' => env('HC_COMPANY_REKVIZITAI_CLIENT_ID'),
         ],
     ],
 ];
