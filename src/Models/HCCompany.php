@@ -51,11 +51,11 @@ class HCCompany extends HCUuidSoftModel
      */
     protected $fillable = [
         'id',
+        'country_id',
         'title',
         'code',
         'vat',
         'address',
         'original_data',
-        'country_id',
     ];
 }

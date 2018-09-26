@@ -26,11 +26,9 @@
  */
 
 return [
-    'companies' => [
-        'lt' => [
-            'url' => 'http://www.rekvizitai.lt/api-xml/',
-            'apiKey' => env('HC_COMPANY_REKVIZITAI_API_KEY'),
-            'clientId' => env('HC_COMPANY_REKVIZITAI_CLIENT_ID'),
-        ],
+    'rekvizitai' => [
+        'url' => 'http://www.rekvizitai.lt/api-xml/',
+        'apiKey' => env('HC_COMPANY_REKVIZITAI_API_KEY'),
+        'clientId' => env('HC_COMPANY_REKVIZITAI_CLIENT_ID'),
     ],
 ];

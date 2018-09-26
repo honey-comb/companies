@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2018 interactivesolutions
+ * @copyright 2018 innovationbase
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Contact InteractiveSolutions:
- * E-mail: info@interactivesolutions.lt
- * http://www.interactivesolutions.lt
+ * Contact InnovationBase:
+ * E-mail: hello@innovationbase.eu
+ * https://innovationbase.eu
  */
 
 declare(strict_types = 1);
 
 namespace HoneyComb\Companies\Services;
 
+use GuzzleHttp\Client;
 use HoneyComb\Companies\Models\HCCompany;
-use HoneyComb\Companies\Repositories\HCCompanyRepository;
+use HoneyComb\Companies\Repositories\Admin\HCCompanyRepository;
 
 /**
  * Class HCCompanyService
@@ -44,12 +45,19 @@ class HCCompanyService
     private $repository;
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * HCCompanyService constructor.
      * @param HCCompanyRepository $repository
+     * @param Client $client
      */
-    public function __construct(HCCompanyRepository $repository)
+    public function __construct(HCCompanyRepository $repository, Client $client)
     {
         $this->repository = $repository;
+        $this->client = $client;
     }
 
     /**
@@ -82,6 +90,42 @@ class HCCompanyService
         }
 
         return $company;
+    }
+
+    /**
+     * @param string $companyCode
+     * @return HCCompany
+     * @throws \Exception
+     */
+    public function createFromRekvizitai(string $companyCode): HCCompany
+    {
+        $content = $this->getContent($companyCode);
+
+        $response = namespacedXMLToArray($content);
+
+        if ($response['status'] == 'error') {
+            throw new \Exception($response['error']);
+        }
+
+        if ($this->getRepository()->makeQuery()->withTrashed()->where([
+            'country_id' => 'lt',
+            'code' => $companyCode,
+        ])->exists()) {
+            throw new \Exception('Company already exists!');
+        }
+
+        $data = $response['companies']['company'];
+        $data['country_id'] = 'lt';
+        $data['original_data'] = json_encode($data);
+        $data['vat'] = $data['pvmCode'];
+
+        $data = array_only($data, $this->getRepository()->getFillable());
+
+        $data = array_filter($data, function ($item) {
+            return !is_array($item);
+        });
+
+        return $this->getRepository()->makeQuery()->create($data);
     }
 
     /**
@@ -120,5 +164,23 @@ class HCCompanyService
         };
 
         return null;
+    }
+
+    /**
+     * @param string $companyCode
+     * @return string
+     */
+    private function getContent(string $companyCode): string
+    {
+        $response = $this->client->get(config('companies.rekvizitai.url'), [
+            'query' => [
+                'apiKey' => config('companies.rekvizitai.apiKey'),
+                'clientId' => config('companies.rekvizitai.clientId'),
+                'method' => 'companyDetails',
+                'code' => $companyCode,
+            ]
+        ]);
+
+        return $response->getBody()->getContents();
     }
 }

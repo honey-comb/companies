@@ -1,0 +1,97 @@
+<?php
+/**
+ * @copyright 2018 innovationbase
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * Contact InnovationBase:
+ * E-mail: hello@innovationbase.eu
+ * https://innovationbase.eu
+ */
+
+declare(strict_types = 1);
+
+namespace HoneyComb\Companies\Repositories\Admin;
+
+use HoneyComb\Companies\Http\Requests\Admin\HCCompanyRequest;
+use HoneyComb\Companies\Models\HCCompany;
+use HoneyComb\Starter\Repositories\HCBaseRepository;
+use HoneyComb\Starter\Repositories\Traits\HCQueryBuilderTrait;
+
+/**
+ * Class HCCompanyRepository
+ * @package HoneyComb\Companies\Repositories\Admin
+ */
+class HCCompanyRepository extends HCBaseRepository
+{
+    use HCQueryBuilderTrait;
+
+    /**
+     * @return string
+     */
+    public function model(): string
+    {
+        return HCCompany::class;
+    }
+
+    /**
+     * @param HCCompanyRequest $request
+     * @return \Illuminate\Support\Collection|static
+     */
+    public function getOptions(HCCompanyRequest $request)
+    {
+        return $this->createBuilderQuery($request)->get()->map(function ($record) {
+            return [
+                'id' => $record->id,
+                'label' => $record->label,
+            ];
+        });
+    }
+
+    /**
+     * Soft deleting records
+     * @param array $ids
+     * @throws \Exception
+     */
+    public function deleteSoft(array $ids): void
+    {
+        $records = $this->makeQuery()->whereIn('id', $ids)->get();
+
+        foreach ($records as $record) {
+            /** @var HCCompany $record */
+            $record->delete();
+        }
+    }
+
+    /**
+     * @param array $companyIds
+     * @return array
+     */
+    public function restore(array $companyIds): array
+    {
+        $records = $this->makeQuery()->withTrashed()->whereIn('id', $companyIds)->get();
+
+        foreach ($records as $record) {
+            /** @var HCCompany $record */
+            $record->restore();
+        }
+
+        return $companyIds;
+    }
+}

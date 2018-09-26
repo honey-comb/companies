@@ -59,12 +59,19 @@ class HCCompanyServiceProvider extends HCBaseServiceProvider
     protected $namespace = 'HoneyComb\Companies\Http\Controllers';
 
     /**
+     * Provider name
+     *
+     * @var string
+     */
+    protected $packageName = 'HCCompany';
+
+    /**
      *
      */
     public function register(): void
     {
         $this->mergeConfigFrom(
-            $this->packagePath('config/companies.php'), 'hc'
+            $this->packagePath('config/companies.php'), 'companies'
         );
 
         $this->registerRepositories();

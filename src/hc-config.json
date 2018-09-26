@@ -4,11 +4,34 @@
         "sequence": 0,
         "namespace": "HoneyComb\\Companies\\"
     },
-    "formData": {},
-    "adminMenu": [],
+    "formData": {
+        "companies": "HoneyComb\\Companies\\Forms\\Admin\\HCCompanyForm"
+    },
+    "adminMenu": [
+        {
+            "route": "admin.companies.index",
+            "parent": "admin.index",
+            "translation": "HCCompany::companies.page_title",
+            "icon": "building",
+            "aclPermission": "honey_comb_companies_companies_list"
+        }
+    ],
     "seeder": "",
-    "routes": [],
+    "routes": [
+        "Routes\/Admin\/routes.companies.php"
+    ],
     "acl": {
-        "permissions": []
+        "permissions": [
+            {
+                "name": "acl.companies",
+                "controller": "HoneyComb\\Companies\\Http\\Controllers\\Admin\\HCCompanyController",
+                "actions": [
+                    "honey_comb_companies_companies_update",
+                    "honey_comb_companies_companies_create",
+                    "honey_comb_companies_companies_delete",
+                    "honey_comb_companies_companies_list"
+                ]
+            }
+        ]
     }
 }

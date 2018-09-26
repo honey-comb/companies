@@ -25,27 +25,17 @@
  * https://innovationbase.eu
  */
 
-declare(strict_types = 1);
-
-namespace HoneyComb\Companies\Repositories;
-
-use HoneyComb\Companies\Models\HCCompany;
-use HoneyComb\Starter\Repositories\Traits\HCQueryBuilderTrait;
-use HoneyComb\Starter\Repositories\HCBaseRepository;
-
-/**
- * Class HCCompanyRepository
- * @package HoneyComb\Companies\Repositories
- */
-class HCCompanyRepository extends HCBaseRepository
-{
-    use HCQueryBuilderTrait;
-
-    /**
-     * @return string
-     */
-    public function model(): string
-    {
-        return HCCompany::class;
-    }
-}
+return [
+    'page_title' => 'Companies',
+    'country_id' => 'Country',
+    'title' => 'Title',
+    'code' => 'Code',
+    'vat' => 'Vat',
+    'address' => 'Address',
+    'original_data' => 'Original data',
+    'id' => 'Id',
+    'create_type' => 'Create type',
+    'from_rekvizitai' => 'From rekvizitai.lt',
+    'manually' => 'Manually',
+    'company_code' => 'Company code',
+];

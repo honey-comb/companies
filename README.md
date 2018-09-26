@@ -36,8 +36,8 @@ Firstly register the service provider and Facade by opening `config/app.php`
 
 In the `.env` file please add these parameters:
 
-    HC_COMPANIES_LT_API_KEY=KEY
-    HC_COMPANIES_LT_CLIENT_ID=ID
+    HC_COMPANY_REKVIZITAI_API_KEY=KEY
+    HC_COMPANY_REKVIZITAI_CLIENT_ID=ID
     
 Through the help of `HoneyComb\Companies\Services\HCCompanyService` call `findByCode('CODE')` function
 
