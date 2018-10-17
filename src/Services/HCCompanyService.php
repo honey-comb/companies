@@ -47,7 +47,7 @@ class HCCompanyService
     /**
      * @var Client
      */
-    private $client;
+    protected $client;
 
     /**
      * HCCompanyService constructor.
