@@ -30,7 +30,7 @@ or
 
 Firstly register the service provider and Facade by opening `config/app.php`
 
-    HoneyComb\Core\Providers\HCCompanyServiceProvider::class,
+    HoneyComb\Companies\Providers\HCCompanyServiceProvider::class,
     
 ## Usage
 
