@@ -32,6 +32,7 @@ namespace HoneyComb\Companies\Services;
 use GuzzleHttp\Client;
 use HoneyComb\Companies\Models\HCCompany;
 use HoneyComb\Companies\Repositories\Admin\HCCompanyRepository;
+use HoneyComb\Starter\Exceptions\HCException;
 
 /**
  * Class HCCompanyService
@@ -70,18 +71,36 @@ class HCCompanyService
 
     /**
      * @param string $code
-     * @return HCCompany|null
+     * @return HCCompany
      * @throws \Exception
      */
-    public function findByCode(string $code): ?HCCompany
+    public function findByCode(string $code): HCCompany
     {
         $company = $this->getRepository()->findOneBy(['code' => $code]);
 
         if (is_null($company)) {
-            $company = $this->createFromRekvizitai($code);
+            $company = $this->createSingleCompanyFromRekvizitai($code);
         }
 
         return $company;
+    }
+
+    /**
+     * @param string $title
+     * @return array
+     * @throws HCException
+     */
+    public function searchByTitle(string $title): array
+    {
+        $content = $this->getContentByTitle($title);
+
+        $response = namespacedXMLToArray($content);
+
+        if ($response['status'] == 'error') {
+            throw new HCException($response['error']);
+        }
+
+        return array_get($response, 'companies.company');
     }
 
     /**
@@ -89,21 +108,21 @@ class HCCompanyService
      * @return HCCompany
      * @throws \Exception
      */
-    public function createFromRekvizitai(string $companyCode): HCCompany
+    public function createSingleCompanyFromRekvizitai(string $companyCode): HCCompany
     {
-        $content = $this->getContent($companyCode);
+        $content = $this->getContentByCode($companyCode);
 
         $response = namespacedXMLToArray($content);
 
         if ($response['status'] == 'error') {
-            throw new \Exception($response['error']);
+            throw new HCException($response['error']);
         }
 
         if ($this->getRepository()->makeQuery()->withTrashed()->where([
             'country_id' => 'lt',
             'code' => $companyCode,
         ])->exists()) {
-            throw new \Exception(trans('HCCompany::companies.company_exists'));
+            throw new HCException(trans('HCCompany::companies.company_exists'));
         }
 
         $data = $response['companies']['company'];
@@ -125,7 +144,7 @@ class HCCompanyService
      * @return string
      * @throws \Exception
      */
-    private function getContent(string $companyCode): string
+    public function getContentByCode(string $companyCode): string
     {
         if (!config('companies.rekvizitai.apiKey') || !config('companies.rekvizitai.clientId')) {
             throw new \Exception(trans('HCCompany::companies.credentials_required', ['name' => 'Rekvizitai']));
@@ -137,6 +156,29 @@ class HCCompanyService
                 'clientId' => config('companies.rekvizitai.clientId'),
                 'method' => 'companyDetails',
                 'code' => $companyCode,
+            ],
+        ]);
+
+        return $response->getBody()->getContents();
+    }
+
+    /**
+     * @param string $string
+     * @return string
+     * @throws \Exception
+     */
+    public function getContentByTitle(string $string): string
+    {
+        if (!config('companies.rekvizitai.apiKey') || !config('companies.rekvizitai.clientId')) {
+            throw new \Exception(trans('HCCompany::companies.credentials_required', ['name' => 'Rekvizitai']));
+        }
+
+        $response = $this->client->get(config('companies.rekvizitai.url'), [
+            'query' => [
+                'apiKey' => config('companies.rekvizitai.apiKey'),
+                'clientId' => config('companies.rekvizitai.clientId'),
+                'method' => 'search',
+                'query' => $string,
             ],
         ]);
 
