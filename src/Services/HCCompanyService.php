@@ -87,10 +87,10 @@ class HCCompanyService
 
     /**
      * @param string $title
-     * @return array
+     * @return array - [['code' => companyCode, 'title' => companyTitle], ...]
      * @throws HCException
      */
-    public function searchByTitle(string $title): array
+    public function searchByTitleFromRekvizitai(string $title): array
     {
         $content = $this->getContentByTitle($title);
 

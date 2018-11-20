@@ -66,4 +66,9 @@ Through the help of `HoneyComb\Companies\Services\HCCompanyService` call `findBy
         {
             return $this->service->findByCode($code);
         }
+        
+        public function findAllFromRekvizitai(string $title): array
+        {
+            return $this->service->searchByTitleFromRekvizitai($title);
+        }
     }
